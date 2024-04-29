@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "465867114469",
+    "firebase_url": "https://codify-c-development-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "codify-c-development",
+    "storage_bucket": "codify-c-development.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:465867114469:android:a607e2cbbfac23c55e910c",
+        "android_client_info": {
+          "package_name": "com.DefaultCompany.com.unity.template.mobile2D"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "465867114469-divp672iejor54ln48pm5ijkpskc5vol.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCofxf7WPgfA-lZvDaqlcAaK0_4KOqOrJQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "465867114469-divp672iejor54ln48pm5ijkpskc5vol.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

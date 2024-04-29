@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:keep="@string/firebase_database_url,@string/gcm_defaultSenderId,@string/google_storage_bucket,@string/project_id,@string/google_api_key,@string/google_crash_reporting_api_key,@string/google_app_id,@string/default_web_client_id">
+  <string name="firebase_database_url" translatable="false">https://codify-c-development-default-rtdb.asia-southeast1.firebasedatabase.app</string>
+  <string name="gcm_defaultSenderId" translatable="false">465867114469</string>
+  <string name="google_storage_bucket" translatable="false">codify-c-development.appspot.com</string>
+  <string name="project_id" translatable="false">codify-c-development</string>
+  <string name="google_api_key" translatable="false">AIzaSyCofxf7WPgfA-lZvDaqlcAaK0_4KOqOrJQ</string>
+  <string name="google_crash_reporting_api_key" translatable="false">AIzaSyCofxf7WPgfA-lZvDaqlcAaK0_4KOqOrJQ</string>
+  <string name="google_app_id" translatable="false">1:465867114469:android:a607e2cbbfac23c55e910c</string>
+  <string name="default_web_client_id" translatable="false">465867114469-divp672iejor54ln48pm5ijkpskc5vol.apps.googleusercontent.com</string>
+</resources>
