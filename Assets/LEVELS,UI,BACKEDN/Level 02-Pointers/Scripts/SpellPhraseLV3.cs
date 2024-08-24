@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Net;
 using System.Reflection;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SpellPhraseLV3 : MonoBehaviour
@@ -30,6 +31,7 @@ public class SpellPhraseLV3 : MonoBehaviour
         {
             isDragging = true;
             offset = transform.position - Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            BoardManager2.Instance.drop.text= spellPhrase;
         }
     }
 
@@ -65,15 +67,17 @@ public class SpellPhraseLV3 : MonoBehaviour
                         if (str == hit.collider.gameObject && pc.currentposChanged )
                         {
                             Debug.Log("hiton strcpy");
-                            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                            mousePosition.z = -1;
-                            transform.position = mousePosition;
+                            BoxCollider2D strC= str.GetComponent<BoxCollider2D>();
+                            Vector3 dropPos = strC.bounds.center;
+                            transform.position = dropPos;
+                           
                             currentPos = transform.position;
                             transform.parent = str.transform;
                             ValuePrinter.Instance.OnSpellWordDrop(spellPhrase, str.GetComponent<Pointer_Container>());
                             gameObject.GetComponent<BoxCollider2D>().enabled = false;
                             isUsed = true;
-                            return;
+                            BoardManager2.Instance.drop.text = null;
+                        return;
                         }                   
                 }
 
@@ -83,15 +87,21 @@ public class SpellPhraseLV3 : MonoBehaviour
                     mousePosition.z = -1;
                     transform.position = mousePosition;
                     currentPos = transform.position;
+                   
                     return;
                 }
                 else
                 {
                     transform.position = startingPos;
-
+                    
                 }
             }
         }
+    }
+
+    public void onBox(Vector3 boxpos)
+    {
+        transform.Translate(boxpos);
     }
 
     public void getStrcpy()

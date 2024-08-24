@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using System;
+using TMPro;
 
 public class BuildCheck : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class BuildCheck : MonoBehaviour
     public static BuildCheck instance;
     public GameObject Uimanager;
     public UIManager UIManager;
+    public TMP_Text errortext;
     private void Awake()
     {
         instance = this;
@@ -24,28 +26,31 @@ public class BuildCheck : MonoBehaviour
         HashSet<string> expectedType4 = new HashSet<string>() { "bool moon_Stone = true ;", "float iron = 10.25 ;", "float Silver = 20 ;", "float Gold = 5 ;" };
 
         string[] lines = buildText.Split(new[] { '\n' }, System.StringSplitOptions.RemoveEmptyEntries);
+        HashSet<string> actual = new HashSet<string>(lines);
 
-        bool allPartsFound = true;
-        foreach (string expectedPart in lines)
-        {
-            Debug.Log(expectedPart);
-            if (!expectedType1.Contains(expectedPart) && !expectedType2.Contains(expectedPart) && !expectedType3.Contains(expectedPart) && !expectedType4.Contains(expectedPart))
-            {               
-               allPartsFound = false;
-               break;
-            }
-        }
-        if (allPartsFound)
+        bool type1 = expectedType1.SetEquals(actual);
+        bool type2 = expectedType1.SetEquals(actual);
+        bool type3 = expectedType1.SetEquals(actual);
+        bool type4 = expectedType1.SetEquals(actual);
+
+        if (type1 || type2 || type3 || type4)
         {
             Debug.Log("successfull build");
-            //UIManager.Level2intro();
+            StartCoroutine(level1Build());
            
         }
         else 
         {
-            Debug.Log("wrongBuild");
+            StartCoroutine(wrongText());
         }
     }
+
+    public IEnumerator level1Build()
+    {
+        yield return new WaitForSeconds(2f);
+        UIManager.Instance.lv1complete();
+    }
+
 
     public void checkLevel2(string buildText)
     {
@@ -76,16 +81,17 @@ public class BuildCheck : MonoBehaviour
         if (allPartsFound)
         {
             Debug.Log("successful build");
-            //UIManager.LevelComplete();
+            StartCoroutine (level2Build());
         }
         else
         {
-            Debug.Log("wrongBuild");
+            StartCoroutine(wrongText());
         }
-
-
-
-
+    }
+    public IEnumerator level2Build()
+    {
+        yield return new WaitForSeconds(2f);
+        UIManager.Instance.lv2complete();
     }
 
     public void checkLevel3(string buildText)
@@ -117,21 +123,31 @@ public class BuildCheck : MonoBehaviour
         if (allPartsFound)
         {
             Debug.Log("successful build");
-            //UIManager.LevelComplete();
+
+            GameObject lv3 = GameObject.Find("LevelManager");
+            NextLevelButton sc=lv3.AddComponent<NextLevelButton>();
+            sc.updateUserLevel();
+
+            StartCoroutine(level3Build());
         }
         else
         {
-            Debug.Log("wrongBuild");
+            StartCoroutine(wrongText());
         }
 
     }
+
+    public IEnumerator wrongText()
+    {
+        errortext.text = "W r o n g  b u i l d !";
+        yield return new WaitForSeconds(2f);
+        errortext.text = null;
+    }
+
+    public IEnumerator level3Build()
+    {
+        yield return new WaitForSeconds(2f);
+        UIManager.Instance.lv3complete();
+        
+    }
 }
-/*IEnumerator<string> enumerator = lineSt.GetEnumerator();
-
-        Debug.Log("Elements in the HashSet:");
-
-        // Loop until there are no more elements
-        while (enumerator.MoveNext())
-        {
-            Debug.Log(enumerator.Current);
-        }*/

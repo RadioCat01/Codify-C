@@ -41,7 +41,8 @@ public class ValuePrinter : MonoBehaviour
     {
         text = currentTextOPointer+"  =  " + retrivedbyPointer;
         sb.Append("\n"+text);
-        StartCoroutine(BoardManager2.Instance.TypeText(sb.ToString())); text = null;
+        BoardManager2.Instance.connect.text=sb.ToString();
+        text = null;
     }
 
     public void OnSpellWordDrop(string str, Pointer_Container o)
@@ -50,14 +51,14 @@ public class ValuePrinter : MonoBehaviour
         {
             if (o.num == 1)
             {
-                sb.Replace("value1", str);
+                sb.Replace("item1", str);
                 StartCoroutine(BoardManager2.Instance.TypeText(sb.ToString()));
                 o.isValueset = true;
                 return;
             }
             else if (o.num == 2)
             {
-                sb.Replace("value2", str);
+                sb.Replace("item2", str);
                 StartCoroutine(BoardManager2.Instance.TypeText(sb.ToString()));
                 o.isValueset = true;
                 return;
@@ -72,7 +73,7 @@ public class ValuePrinter : MonoBehaviour
             if (o.num == 1)
             {
                 Debug.Log("O = 1");
-                sb.Replace("pointer1", str);
+                sb.Replace("below", str);
                 StartCoroutine(BoardManager2.Instance.TypeText(sb.ToString()));
                 o.holdsValue = true;
                 return;
@@ -80,7 +81,7 @@ public class ValuePrinter : MonoBehaviour
             else if (o.num==2)
             {
                 Debug.Log("O = 2");
-                sb.Replace("pointer2", str);
+                sb.Replace("above", str);
                 StartCoroutine(BoardManager2.Instance.TypeText(sb.ToString()));
                 o.holdsValue = true;
                 return;

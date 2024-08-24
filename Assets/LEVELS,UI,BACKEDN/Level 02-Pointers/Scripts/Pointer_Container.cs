@@ -5,7 +5,8 @@ using UnityEngine;
 public class Pointer_Container : MonoBehaviour
 {
     public static Pointer_Container Instance;
-
+    public string OBJName;
+    [Space]
     public bool isPointer;
     public bool isAContainer;
     public bool isTemp;
@@ -35,6 +36,9 @@ public class Pointer_Container : MonoBehaviour
     public bool isSwaped;
     public bool isValueset;
     public bool currentposChanged;
+
+
+   
     void Start()
     {
         currentposChanged = false;
@@ -79,6 +83,7 @@ public class Pointer_Container : MonoBehaviour
         {
             isDragging = true;
             offset = transform.position - Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            BoardManager2.Instance.drop.text = OBJName;
         }
         else if(isUsed && !isStrCpy)
         {
@@ -136,7 +141,7 @@ public class Pointer_Container : MonoBehaviour
                     Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                     mousePosition.z = -1;
                     transform.position = mousePosition;
-                    
+                    BoardManager2.Instance.drop.text = null;
                     isUsed = true;
                     currentText = value;
                     if (isStrCpy) {

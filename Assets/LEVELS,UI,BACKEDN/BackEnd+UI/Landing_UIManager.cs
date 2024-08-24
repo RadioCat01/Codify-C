@@ -42,6 +42,7 @@ public class Landing_UIManager : MonoBehaviour
     {
         GuestWindow.SetActive(false);
         LandingPage.SetActive(false);
+        LevelSelect.SetActive(false);
         MenuWindow.SetActive(true);
     }
 

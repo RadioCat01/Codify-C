@@ -7,6 +7,7 @@ using TMPro;
 using Unity.Collections.LowLevel.Unsafe;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 using static UnityEngine.GraphicsBuffer;
 
 public class BoardManager2 : MonoBehaviour
@@ -24,7 +25,8 @@ public class BoardManager2 : MonoBehaviour
     public TMP_Text drop;
     public TMP_Text connect;
     public TMP_Text starterText;
-    private string starterTextString="include < stdio.h >\nstruct Spell {\nchar first [ 50 ] ;\n char address [ 100 ] ;\n} ;\nint main ( ) {";
+    public TMP_Text errorText;
+    private string starterTextString="include < stdio.h >\nstruct  Forge_Bin {\n char item_1 [ 10 ] ;\n char item_2 [ 10 ] ;\n} ;\nint main ( ) {";
 
     public GameObject LineGameObject;
     public GameObject LineGameObject2;
@@ -42,7 +44,10 @@ public class BoardManager2 : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(TypeStarterText(starterTextString));
+        if (NextLevelButton.levelInstance.levelNum == 4)
+        {
+            StartCoroutine(TypeStarterText(starterTextString));
+        }
     }
     void Awake()
     {
@@ -177,11 +182,11 @@ public class BoardManager2 : MonoBehaviour
             Pointer_Container pc = clickedObject.GetComponent<Pointer_Container>();
             Pointer_Container pointer = selectedObject.GetComponent<Pointer_Container>();
             //&& pointer.retrievedText == "&spell"
-            if (pc.isStrCpy && pointer.retrievedText== "&spell ;" && pointer.currentText== "writer")
+            if (pc.isStrCpy && pointer.retrievedText== "&bottle_store ;" && pointer.currentText== "list")
             {
                 Debug.Log("clicked on Strcpy");
-                string FirstValueOfStruct = "writer->first";
-                string SecondValueOfStruct = "writer->second";
+                string FirstValueOfStruct = "list -> item_1";
+                string SecondValueOfStruct = "list -> item_2";
 
                 if (strcpyindex == 1 )
                 {
@@ -200,11 +205,11 @@ public class BoardManager2 : MonoBehaviour
                 Debug.Log("second click on Strcpy");
 
             }
-            else if (pc.isStrCpy && pointer.retrievedText == "&spell ;" && pointer.currentText == "*writer")
+            else if (pc.isStrCpy && pointer.retrievedText == "&bottle_store ;" && pointer.currentText == "list")
             {
                 Debug.Log("clicked on Strcpy");
-                string FirstValueOfStruct = "*writer->first";
-                string SecondValueOfStruct = "*writer->second";
+                string FirstValueOfStruct = "*list -> item_1";
+                string SecondValueOfStruct = "*list -> item_2";
 
                 if (strcpyindex == 1)
                 {
@@ -224,7 +229,7 @@ public class BoardManager2 : MonoBehaviour
                 Debug.Log("second click on Strcpy");
 
             }
-            else if(pc.isStrCpy && pc.retrievedText != "&spell ;")
+            else if(pc.isStrCpy && pc.retrievedText != "&bottle_store ;")
             {
                 Debug.Log("wrong");
                 return;
@@ -242,6 +247,7 @@ public class BoardManager2 : MonoBehaviour
         LineCreator line = lineObject.GetComponent<LineCreator>();
         line.pointer = pointer;
         line.ConnectedObjectB = target;
+      
     }
 
 
@@ -541,6 +547,7 @@ public class BoardManager2 : MonoBehaviour
             toPos.transform.position = toPos.currentPos;
             toPos.isValueset = false;
             toPos.currentposChanged = false;
+            toPos.holdsValue=false;
         }
         foreach (SpellPhraseLV3 toPos in SpellOBs)
         {
@@ -556,7 +563,7 @@ public class BoardManager2 : MonoBehaviour
             SpellPhraseLV3 sc=toCle.GetComponent<SpellPhraseLV3>();
             sc.clear();
         }
-
+        strcpyindex = 1;
         connect.text = null;
         drop.text = "";
     }
@@ -570,34 +577,66 @@ public class BoardManager2 : MonoBehaviour
 
         if(pc1.isHeatChanged && pc2.isHeatChanged)
         {
-            Debug.Log("successfull");
+            StartCoroutine(loadlv2Outro());
         }
+        else
+        {
+            StartCoroutine(wrongtext());
+        }
+    }
 
+    public IEnumerator loadlv2Outro() { 
+        yield return new WaitForSeconds(2f);
+        UIManager2 um = transform.parent.GetComponent<UIManager2>();
+        um.Outro();
+    }
+
+    public IEnumerator wrongtext()
+    {
+        errorText.text = " W r o n g  B u i l d !";
+        yield return new WaitForSeconds(2f);
+        errorText.text = null;
     }
 
     public void buildV3()
     {
         string text =
-            "struct Spell black_magic ;" +
+            "struct  Forge_Bin  bottle_store  ;" +
             "\n"+
-            "struct Spell *writer ;" +
+            "struct  Forge_Bin  *list ;" +
             "\n" +
-            "writer  =  &spell ;" +
+            "list  =  &bottle_store ;" +
             "\n" +
-            "strcpy( writer->second, \"wooo\" );" +
+            "strcpy( list -> item_2, \"Acid\" );" +
             "\n" +
-            "strcpy( writer->first, \"wooo\" );";
+            "strcpy( list -> item_1, \"Brine\" );";
+        string text2 =
+            "struct  Forge_Bin  bottle_store  ;" +
+            "\n" +
+            "struct  Forge_Bin  *list ;" +
+            "\n" +
+            "list  =  &bottle_store ;" +
+            "\n" +
+            "strcpy( list -> item_1, \"Brine\" );" +
+            "\n" +
+            "strcpy( list -> item_2, \"Acid\" );";
 
-        if(connect.text==text)
+        if (connect.text==text || connect.text==text2)
         {
-            Debug.Log("correct");
+
+                StartCoroutine(loadlv3Outro());
         }
         else
         {
-            Debug.Log("wrong");
+            StartCoroutine(wrongtext());
         }
     }
-    
+    public IEnumerator loadlv3Outro()
+    {
+        yield return new WaitForSeconds(2f);
+        UIManager3 um = transform.parent.GetComponent<UIManager3>();
+        um.Outro();
+    }
 
 }
 

@@ -60,13 +60,13 @@ public class GameManager : MonoBehaviour
     {
         int currentScore = int.Parse(scoreOut.text);
         Debug.Log(currentScore);
-        currentScore++; // Update logic for your score increase
+        currentScore++;
         Debug.Log(currentScore);
-        // Update UI score
+      
         scoreOut.text = currentScore.ToString();
 
         FirebaseAuth auth = FirebaseAuth.DefaultInstance;
-        // Update database with new score
+        
         UpdateUserScore(auth.CurrentUser.UserId, currentScore);
     }
     public void UpdateUserScore(string userId, int newScore)

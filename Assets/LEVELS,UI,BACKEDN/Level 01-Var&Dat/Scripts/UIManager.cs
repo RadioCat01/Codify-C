@@ -1,102 +1,88 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.UIElements;
 
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
 
-    public GameObject level1;
-    public GameObject level2;
-    public GameObject level3;
+    public GameObject level1intro;
+    public GameObject level1outro;
 
-    public GameObject levelPopups;
-    public GameObject level01intro;
-    public GameObject level02intro;
-    public GameObject level03intro;
+    public GameObject ins1;
+    public GameObject ins2;
+    public GameObject ins3;
+    public GameObject ins4;
+    public GameObject ins5;
     public GameObject end;
+
+    public GameObject level1_1;
+    public GameObject level1_2;
+    public GameObject level1_3;
+
+    public GameObject moonblade;
+    public GameObject guardianspride;
+    public GameObject gladius;
 
     private void Awake()
     {
         Instance = this;
     }
 
-    public void nextlevel(int level)
+    public void resetlevel()
     {
-        if(level == 1) {
-            Level2intro();
-        }
-        else if(level == 2)
-        {
-            Level3intro();
-        }
-        else if (level == 3)
-        {
-            LevelComplete();
-        }
+        ClearScreen();
+        level1();
     }
 
-    public void closeIntros()
+    public void ClearScreen()
     {
-        levelPopups.SetActive(false);
-        level01intro.SetActive(false);
-        level02intro.SetActive(false);
-        level03intro.SetActive(false);
+        level1intro.SetActive(false);
+        level1outro.SetActive(false);
+        ins1.SetActive(false);
+        ins2.SetActive(false);
+        ins3.SetActive(false);
+        ins4.SetActive(false);
+        ins5.SetActive(false);
+        end.SetActive(false);
+        level1_1.SetActive(false);
+        level1_2.SetActive(false);
+        level1_3.SetActive(false);
+        moonblade.SetActive(false);
+        guardianspride.SetActive(false);
+        gladius.SetActive(false);
     }
 
-    public void closelevels() 
+    public void closeAll()
     {
-        level1.SetActive(false);
-        level2.SetActive(false);
-        level3.SetActive(false);
+        
+        level1_1.SetActive(false);
+        level1_1.SetActive(false);
+        level1_2.SetActive(false);
     }
 
-    public void goLevel1()
+    public void clearlvComplete()
     {
-        closeIntros();
-        level1.SetActive(true);
-        level2.SetActive(false);
-        level3.SetActive(false);
+        moonblade.SetActive(false);
+        guardianspride.SetActive(false);
+        gladius.SetActive(false);
     }
+    public void openIns1(){ins1.SetActive(true);level1intro.SetActive(false);}
+    public void openIns2(){ins2.SetActive(true); ins1.SetActive(false);}
+    public void openIns3(){ins3.SetActive(true); ins2.SetActive(false);}
+    public void openIns4(){ins4.SetActive(true); ins3.SetActive(false);}
+    public void openIns5(){ins5.SetActive(true);}
+    public void closeins() {ins1.SetActive(false);ins2.SetActive(false);ins3.SetActive(false);ins4.SetActive(false);ins5.SetActive(false);moonblade.SetActive(false);guardianspride.SetActive(false);gladius.SetActive(false);}
 
-    public void Level2intro()
-    {
-        level1.SetActive(false);
-        closeIntros();
-        levelPopups.SetActive(true);
-        level02intro.SetActive(true);
-    }
+    public void lv1complete(){ ClearScreen(); moonblade.SetActive(true);}
+    public void lv2complete(){ clearlvComplete(); guardianspride.SetActive(true);}
+    public void lv3complete(){ clearlvComplete(); gladius.SetActive(true);}
+    public void level1(){closeAll();level1_1.SetActive(true);closeins();}
+    public void level2(){closeAll();level1_2.SetActive(true); closeins();}
+    public void level3(){closeAll();level1_3.SetActive(true); closeins();}
 
-    public void goLevel2()
-    {
-        closeIntros() ;
-        level1.SetActive(false);
-        level2.SetActive(true);
-        level3.SetActive(false);
-    }
+    public void levelComplete() { closeAll(); end.SetActive(true); }
 
-    public void Level3intro()
-    {
-        level2.SetActive(false);
-        closeIntros();
-        levelPopups.SetActive(true);
-        level03intro.SetActive(true);
-    }
-
-    public void goLevel3()
-    {
-        closeIntros();
-        level1.SetActive(false);
-        level2.SetActive(false);
-        level3.SetActive(true);
-    }
-
-    public void LevelComplete()
-    {
-        closelevels();
-        closeIntros();
-        levelPopups.SetActive(true);
-        end.SetActive(true);
-    }
 }
